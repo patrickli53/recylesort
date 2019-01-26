@@ -1,9 +1,9 @@
 const Clarifai = require('clarifai');
-import { imagePath } from './src/index.js'; 
+var imagePath = require('./src/index.js'); 
 
 const app = new Clarifai.App({
     apiKey: '149600ad4a084e3e8501b5255a8c4778'
-}); 
+});
 
 app.inputs.create({
     url: "https://spectator.imgix.net/content/uploads/2018/01/Plastic-bag-NO-TEXT-THIS_SE-copy.jpg?auto=compress,enhance,format&crop=faces,entropy,edges&fit=crop&w=820&h=550",
@@ -40,23 +40,23 @@ app.inputs.create({
 
 //----------------------------------------------------------------------------------------------------------------
 
-// Tags that indicate a recyclable object. 
-var recycleTags = ['recycling', 'plastic', 'paper', 'cardboard', 'carton']; 
+// Tags that indicate a recyclable object.
+var recycleTags = ['recycling', 'plastic', 'paper', 'cardboard', 'carton'];
 
-// Prediction model. 
+// Prediction model.
 app.models.predict(Clarifai.GENERAL_MODEL, imagePath)
     .then(response => {
-        var concepts = response['outputs'][0]['data']['concepts']; 
-        var tags = []; 
-        var banned = []; 
+        var concepts = response['outputs'][0]['data']['concepts'];
+        var tags = [];
+        var banned = [];
 
         for (var i = 0; i < concepts.length; i++) {
             for (var u = 0; u < recycleTags.length; u++) {
                 if (concepts[i].name == recycleTags[u]) {
                     tags.push(concepts[i]);
                 };
-            };  
-        };  
+            };
+        };
 
         // console.log(concepts);
 
@@ -68,4 +68,4 @@ app.models.predict(Clarifai.GENERAL_MODEL, imagePath)
     })
     .catch(err => {
         console.log(err);
-    }); 
+    });
