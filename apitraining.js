@@ -1,4 +1,5 @@
-const Clarifai = require('clarifai'); 
+const Clarifai = require('clarifai');
+import { imagePath } from './src/index.js'; 
 
 const app = new Clarifai.App({
     apiKey: '149600ad4a084e3e8501b5255a8c4778'
@@ -17,7 +18,7 @@ const app = new Clarifai.App({
         }
     ]
 }).then(app.models.create(
-    "garbageSortingModel",
+    "recycleSortingModel",
     [
         {
             "id": "trash"
@@ -35,16 +36,7 @@ const app = new Clarifai.App({
         // there was an error
         console.log(err);
     }
-));
-
-app.models.train("{model_id}").then(
-    function (response) {
-        // do something with response
-    },
-    function (err) {
-        // there was an error
-    }
-);*/
+)); */
 
 //----------------------------------------------------------------------------------------------------------------
 
@@ -52,7 +44,7 @@ app.models.train("{model_id}").then(
 var recycleTags = ['recycling', 'plastic', 'paper', 'cardboard', 'carton']; 
 
 // Prediction model. 
-app.models.predict(Clarifai.GENERAL_MODEL, 'https://i5.walmartimages.com/asr/3bc43683-1ba5-4c62-ba6a-460504e7b152_1.484d5d58b37bf0575a5364df5d69ffe2.jpeg')
+app.models.predict(Clarifai.GENERAL_MODEL, imagePath)
     .then(response => {
         var concepts = response['outputs'][0]['data']['concepts']; 
         var tags = []; 
