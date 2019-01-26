@@ -25,8 +25,16 @@ class NavBar extends React.Component {
       margin:'2vw',
       textDecoration:'none'
     }
+    var imgStyle = {
+      height:'3%',
+      width:'3%',
+      position:'relative',
+      float:'left',
+      marginLeft:'2vw'
+    }
     return(
       <div style={navBarStyle}>
+        <img style={imgStyle} src="recycleicon.png" alt=""/>
         <NavLink style={textStyle} to="/">About</NavLink>
         <NavLink style={textStyle} to="/picture">Take a Picture</NavLink>
         <NavLink style={textStyle} to="/help">Help</NavLink>
@@ -49,11 +57,13 @@ class About extends React.Component {
         <p className="lead">This is a temporary description but please enjoy these random words.</p>
         <hr className="my-2"/>
         <p className="lead">This is a temporary description but please enjoy these random words.</p>
-        <Button outline color='primary'>Is this Recyclable?</Button>
+        <NavLink to='/picture'><Button outline color='primary'>Is this Recyclable?</Button></NavLink>
       </Jumbotron>
     );
   }
 }
+
+var imagePath = 'null';
 
 class WebcamCapture extends React.Component {
   constructor(props) {
@@ -72,6 +82,7 @@ class WebcamCapture extends React.Component {
 
   capture = () => {
     var imageSrc = this.webcam.getScreenshot();
+    imagePath = imageSrc;
     this.setState({
       imageData:imageSrc,
       imgTaken:'true',
@@ -80,6 +91,7 @@ class WebcamCapture extends React.Component {
   }
 
   retake = () => {
+    imagePath = 'null';
     this.setState({
       imageData:'null',
       imgTaken:'false',
@@ -94,6 +106,10 @@ class WebcamCapture extends React.Component {
 
     var containerStyle = {
       marginTop:100
+    }
+
+    var webcamStyle = {
+
     }
     if (this.state.imgTaken === 'true') {
       return(
@@ -117,6 +133,9 @@ class WebcamCapture extends React.Component {
     }
   }
 }
+
+//exporting image file
+export default {imagePath};
 
 class TempDiv extends React.Component {
   render() {
