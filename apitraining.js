@@ -5,7 +5,7 @@ const app = new Clarifai.App({
     apiKey: '149600ad4a084e3e8501b5255a8c4778'
 });
 
-/*app.inputs.create({
+app.inputs.create({
     url: "https://spectator.imgix.net/content/uploads/2018/01/Plastic-bag-NO-TEXT-THIS_SE-copy.jpg?auto=compress,enhance,format&crop=faces,entropy,edges&fit=crop&w=820&h=550",
     concepts: [
         {
@@ -36,7 +36,7 @@ const app = new Clarifai.App({
         // there was an error
         console.log(err);
     }
-)); */
+)); 
 
 //----------------------------------------------------------------------------------------------------------------
 
