@@ -14,15 +14,79 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+    <!-- <script type="text/javascript">
+      const Clarifai = require('clarifai');
+      const imagePath = require('../src/index.js');
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+      const app = new Clarifai.App({
+          apiKey: '149600ad4a084e3e8501b5255a8c4778'
+      });
+
+      /*app.inputs.create({
+          url: "https://spectator.imgix.net/content/uploads/2018/01/Plastic-bag-NO-TEXT-THIS_SE-copy.jpg?auto=compress,enhance,format&crop=faces,entropy,edges&fit=crop&w=820&h=550",
+          concepts: [
+              {
+                  id: "trash",
+                  value: true
+              },
+              {
+                  id: "recyclable",
+                  value: false
+              }
+          ]
+      }).then(app.models.create(
+          "recycleSortingModel",
+          [
+              {
+                  "id": "trash"
+              },
+              {
+                  "id": "recyclable"
+              }
+          ]
+      ).then(
+          function (response) {
+              // do something with response
+              console.log(response);
+          },
+          function (err) {
+              // there was an error
+              console.log(err);
+          }
+      )); */
+
+      //----------------------------------------------------------------------------------------------------------------
+
+      // Tags that indicate a recyclable object.
+      var recycleTags = ['recycling', 'plastic', 'paper', 'cardboard', 'carton'];
+
+      // Prediction model.
+      app.models.predict(Clarifai.GENERAL_MODEL, imagePath)
+          .then(response => {
+              var concepts = response['outputs'][0]['data']['concepts'];
+              var tags = [];
+              var banned = [];
+
+              for (var i = 0; i < concepts.length; i++) {
+                  for (var u = 0; u < recycleTags.length; u++) {
+                      if (concepts[i].name == recycleTags[u]) {
+                          tags.push(concepts[i]);
+                      };
+                  };
+              };
+
+              // console.log(concepts);
+
+              if (tags.length != 0) {
+                  console.log("This is recyclable lulll");
+              } else {
+                  console.log("Uh lol not sure lol kek");
+              }
+          })
+          .catch(err => {
+              console.log(err);
+          });
+    </script> -->
   </body>
 </html>
