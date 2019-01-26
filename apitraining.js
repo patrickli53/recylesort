@@ -1,5 +1,5 @@
 const Clarifai = require('clarifai');
-var imagePath = require('./src/index.js'); 
+var imagePath = require('./src/index.js');
 
 const app = new Clarifai.App({
     apiKey: '149600ad4a084e3e8501b5255a8c4778'
@@ -44,7 +44,7 @@ const app = new Clarifai.App({
 var recycleTags = ['recycling', 'plastic', 'paper', 'cardboard', 'carton'];
 
 // Prediction model.
-app.models.predict(Clarifai.GENERAL_MODEL, imagePath)
+app.models.predict(Clarifai.GENERAL_MODEL, {base64:imagePath})
     .then(response => {
         var concepts = response['outputs'][0]['data']['concepts'];
         var tags = [];
